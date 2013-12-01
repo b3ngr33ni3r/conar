@@ -1,0 +1,46 @@
+{
+  "name": "conar",
+  "description": "returns a key-value object from combined config file/argv values.",
+  "version": "0.1.0",
+  "homepage": "https://github.com/b3ngr33ni3r/conar",
+  "author": {
+    "name": "Ben Greenier",
+    "email": "ben+npm@bengreenier.com",
+    "homepage": "bengreenier.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/b3ngr33ni3r/conar.git"
+  },
+  "bugs": {
+    "url": "https://github.com/b3ngr33ni3r/conar/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/b3ngr33ni3r/conar/blob/master/LICENSE"
+    }
+  ],
+  "main": "conar",
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "scripts": {
+    "test": "grunt nodeunit",
+    "start": "server.js"
+  },
+  "dependencies": {
+    "optimist": "0.6.x",
+    "js-yaml": "~2.1.0",
+    "extend": "~1.2.1",
+    "path-resolver": "~0.0.2"
+  },
+  "devDependencies": {
+    "grunt-contrib-jshint": "~0.6.0",
+    "grunt-contrib-nodeunit": "~0.2.0",
+    "grunt-contrib-watch": "~0.4.0",
+    "grunt": "~0.4.1"
+  },
+  "keywords": ["config","argument","argument","config parse","argument parse","optimist"],
+  "preferGlobal": true
+}

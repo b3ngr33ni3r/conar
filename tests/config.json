@@ -1,0 +1,12 @@
+{
+  "application": {
+    "production": {
+      "port": 3000,
+      "debug": false
+    },
+    "development": {
+      "port": 2000,
+      "debug": true
+    }
+  }
+}
