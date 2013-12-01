@@ -9,7 +9,19 @@ module.exports = function(grunt) {
     },
     jshint: {
       options: {
-        jshintrc: '.jshintrc'
+        curly: true,
+        eqeqeq: true,
+        eqnull: true,
+        camelcase: true,
+        forin: true,
+        indent: 2,
+        newcap: true,
+        noarg: true,
+        noempty: true,
+        nonew: true,
+        undef: true,
+        node: true,
+        unused: true
       },
       gruntfile: {
         src: 'Gruntfile.js'
@@ -32,7 +44,7 @@ module.exports = function(grunt) {
       },
       test: {
         files: '<%= jshint.test.src %>',
-        tasks: ['jshint:test', 'nodeunit']
+        tasks: ['jshint:lib','jshint:test', 'nodeunit']
       },
     },
   });
