@@ -36,10 +36,11 @@
     "path-resolver": "~0.0.2"
   },
   "devDependencies": {
-    "grunt-contrib-jshint": "~0.6.0",
+    "grunt-contrib-jshint": "0.7.x",
     "grunt-contrib-nodeunit": "~0.2.0",
-    "grunt-contrib-watch": "~0.4.0",
-    "grunt": "~0.4.1"
+    "grunt-contrib-watch": "0.5.x",
+    "grunt": "~0.4.1",
+    "grunt-cli": "0.1.x"
   },
   "keywords": ["config","argument","argument","config parse","argument parse","optimist"],
   "preferGlobal": true
