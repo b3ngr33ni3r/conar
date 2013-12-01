@@ -3,6 +3,7 @@ Conar
 
 [![devDependency Status](https://david-dm.org/b3ngr33ni3r/conar/dev-status.png)](https://david-dm.org/b3ngr33ni3r/conar#info=devDependencies) [![Dependency Status](https://david-dm.org/b3ngr33ni3r/conar.png)](https://david-dm.org/b3ngr33ni3r/conar) [![Build Status](https://travis-ci.org/b3ngr33ni3r/conar.png?branch=master)](https://travis-ci.org/b3ngr33ni3r/conar)
 
+> This is _sort of_ a replacement for [uniformer](htts://github.com/b3ngr33ni3r/uniformer).
 returns a key-value object from combined config file/argv values.
 
 ## How?
