@@ -10,7 +10,7 @@ returns a key-value object from combined config file/argv values.
 
 Conar combines the power and ease of configuration files (_currently yaml and json_) with command line arguments to make launching applications with options simple for both developers, and consumers.
 
-By wrapping [optimist](https://github.com/substack/node-optimist) we get some serious argument-parsing firepower, combined with configuration features.
+By wrapping [optimist](https://github.com/substack/node-optimist) we get some serious argument-parsing firepower, that we combine with configuration features.
 
 You can [peruse the tests](https://github.com/b3ngr33ni3r/conar/blob/master/tests), [view the latest build](https://travis-ci.org/b3ngr33ni3r/conar.png?branch=master) on travis-ci, or [checkout the examples](https://github.com/b3ngr33ni3r/conar/wiki/Examples) in [the wiki](https://github.com/b3ngr33ni3r/conar/wiki) to learn a bit more.
 
@@ -24,8 +24,27 @@ var config = conar.argv; //just like optimist
 
 ```
 var conar = require('conar');
-var config = conar.argv;    //merge config.(json|yaml) with args if config file present
-config.serialize();     //serialize the arguments to config file they where loaded from
+var config = conar.defaults({debug:false,port:3000}).argv;    //setup defaults without doing .default(key,value) for each
+```
+
+```
+var conar = require('conar');
+var config = conar.argv; //pass config=path/to/config at command line to merge config file values with argument values
+```
+
+```
+var conar = require('conar');
+var config = conar.default('config',"path/to/config"); //merge with config at path/to/config by default
+```
+
+```
+var conar = require('conar');
+var config = conar.disable("config").default('config',"path/to/config"); //merge with config (user can't override with config=path) at path/to/config
+```
+
+```
+var conar = require('conar');
+var config = conar.disable("port","secret","id","author"); //disable these keys from being set by the user (API can still set 'em)
 ```
 
 ## More stuff?

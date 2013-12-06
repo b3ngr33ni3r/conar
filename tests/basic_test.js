@@ -20,10 +20,9 @@ exports.basicTest = {
     test.deepEquals(conar.defaults({defs:{key:value,cat:true,dog:false,number:2}}).argv.defs,{key:value,cat:true,dog:false,number:2}); //defaults takes an object
     test.done();
   },
-  "serialize": function(test) {
+  "disable": function(test) {
     test.expect(2);
-    test.ok(conar(['--key','value','--cat','dog']).argv.serialize('serialized.json')); //serialize to file (type = ext, w/ fallback on json)
-    test.ok(conar(['--config','config.yaml']).argv.serialize());  //serialize to configuration passed
-    test.done();
+    test.deepEquals(conar(['--key','value','--pie=1']).disable("key").argv,{pie:1}); //disable key
+    test.deepEquals(conar(['--secret=hey','--hack','enabled','--bad=true','--good=ok']).disable("bad","hack","secret").argv,{good:"ok"}) //disable multiple
   }
 };
