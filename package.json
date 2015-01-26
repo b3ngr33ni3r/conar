@@ -1,8 +1,8 @@
 {
   "name": "conar",
-  "description": "returns a key-value object from combined config file/argv values.",
-  "version": "0.1.0",
-  "homepage": "https://github.com/b3ngr33ni3r/conar",
+  "description": "produces key-value objects from combined config file/argv/env values.",
+  "version": "0.1.1",
+  "homepage": "https://github.com/bengreenier/conar",
   "author": {
     "name": "Ben Greenier",
     "email": "ben+npm@bengreenier.com",
@@ -10,38 +10,35 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/b3ngr33ni3r/conar.git"
+    "url": "https://github.com/bengreenier/conar.git"
   },
   "bugs": {
-    "url": "https://github.com/b3ngr33ni3r/conar/issues"
+    "url": "https://github.com/bengreenier/conar/issues"
   },
   "licenses": [
     {
       "type": "MIT",
-      "url": "https://github.com/b3ngr33ni3r/conar/blob/master/LICENSE"
+      "url": "https://github.com/bengreenier/conar/blob/master/LICENSE"
     }
   ],
-  "main": "conar",
-  "engines": {
-    "node": ">= 0.8.0"
-  },
   "scripts": {
-    "test": "grunt nodeunit",
-    "start": "server.js"
+    "test": "mocha"
   },
   "dependencies": {
-    "optimist": "0.6.x",
-    "js-yaml": "~2.1.0",
-    "extend": "~1.2.1",
-    "path-resolver": "~0.0.2"
+    "array.prototype.find": "^1.0.0",
+    "hulksmash": "0.0.2",
+    "lconf": "0.0.3",
+    "minimist": "^1.1.0"
   },
   "devDependencies": {
-    "grunt-contrib-jshint": "0.7.x",
-    "grunt-contrib-nodeunit": "~0.2.0",
-    "grunt-contrib-watch": "0.5.x",
-    "grunt": "~0.4.1",
-    "grunt-cli": "0.1.x"
+    "mocha": "^2.1.0"
   },
-  "keywords": ["config","argument","argument","config parse","argument parse","optimist"],
-  "preferGlobal": true
+  "keywords": [
+    "config",
+    "argument",
+    "argument",
+    "config parse",
+    "argument parse",
+    "conar"
+  ]
 }
