@@ -1,4 +1,4 @@
-Conar [![Build Status](https://travis-ci.org/bengreenier/conar.png?branch=master)](https://travis-ci.org/bengreenier/conar)
+Conar [![Build Status](https://travis-ci.org/bengreenier/conar.svg?branch=master)](https://travis-ci.org/bengreenier/conar)
 =======
 conar (pronounced like the name connor) provides a quick, customizable way to __combine environment, argument, and configuration file values at runtime into a configuration object__.
 
