@@ -39,6 +39,24 @@ describe("Conar instance", function() {
     assert.deepEqual(c, {hi: "there"}, "c shouldn't be "+JSON.stringify(c));
   });
 
+  it("shouldn't parse blacklisted argv arguments", function() {
+    var c = conar({arg:["--hi=there"]})
+      .config(false)
+      .env(false)
+      .arg("hi")
+      .opts();
+
+    assert.deepEqual(c, {}, "c shouldn't be "+JSON.stringify(c));
+  });
+
+  it("shouldn't parse argv if source is disabled", function() {
+    var c = conar({arg:["--hi=there"]})
+      .arg(false)
+      .opts();
+
+    assert.deepEqual(c, {}, "c shouldn't be "+JSON.stringify(c));
+  });
+
   it("should parse whitelisted env arguments", function() {
     var c = conar({env:{hi: "there"}})
       .config(false)
@@ -47,6 +65,24 @@ describe("Conar instance", function() {
       .opts();
 
     assert.deepEqual(c, {hi: "there"}, "c shouldn't be "+JSON.stringify(c));
+  });
+
+  it("shouldn't parse all env arguments", function() {
+    var c = conar({env:{hi: "there"}})
+      .config(false)
+      .arg(false)
+      .opts();
+
+    assert.deepEqual(c, {}, "c shouldn't be "+JSON.stringify(c));
+  });
+
+  it("shouldn't parse env if source is disabled", function() {
+    var c = conar({env:{hi: "there"}})
+      .env(false)
+      .env("hi")
+      .opts();
+
+    assert.deepEqual(c, {}, "c shouldn't be "+JSON.stringify(c));
   });
 
   it("should parse config files (using lconf)", function() {
@@ -68,6 +104,37 @@ describe("Conar instance", function() {
         }
       }
     }, "c shouldn't be "+JSON.stringify(c));
+  });
+
+  it("shouldn't parse blacklisted values from config files (using lconf)", function() {
+    var c = conar()
+      .env(false)
+      .arg(false)
+      .parse("./test/config.json")
+      .config("application.production.port")
+      .opts();
+
+    assert.deepEqual(c, {
+      "application": {
+        "production": {
+          "debug": false
+        },
+        "development": {
+          "port": 2000,
+          "debug": true
+        }
+      }
+    }, "c shouldn't be "+JSON.stringify(c));
+  });
+
+  it("shouldn't parse config files if source is disabled", function() {
+    var c = conar()
+      .config(false)
+      .parse("./test/config.json")
+      .config("application.production.port")
+      .opts();
+
+    assert.deepEqual(c, {}, "c shouldn't be "+JSON.stringify(c));
   });
 
   it("should override env with argv by default", function() {
@@ -113,9 +180,47 @@ describe("Conar instance", function() {
 
   it("should override arg->env->config (arg on top)", function() {
     var c = conar({env:{hi: "there"},arg:["--hi=man","--application.production.port=1337"]})
-    .log(console.log)
       .env("hi")
       .parse("./test/config.json")
+      .opts();
+
+    assert.deepEqual(c, {
+      "hi": "man",
+      "application": {
+        "production": {
+          "port": 1337,
+          "debug": false
+        },
+        "development": {
+          "port": 2000,
+          "debug": true
+        }
+      }
+    }, "c shouldn't be "+JSON.stringify(c));
+  });
+
+  it("should suppress exceptions when told to", function() {
+    var c = conar()
+      .parse("nonexistent")
+      .suppress()
+      .opts();
+
+      assert.deepEqual(c, {}, "c shouldn't be "+JSON.stringify(c));
+  });
+
+  it("should support defaults", function() {
+    var c = conar()
+      .defaults({hi: "there"})
+      .opts();
+
+      assert.deepEqual(c, {hi: "there"}, "c shouldn't be "+JSON.stringify(c));
+  });
+
+  it("should override arg->env->config->defaults (arg on top)", function() {
+    var c = conar({env:{hi: "there"},arg:["--hi=man","--application.production.port=1337"]})
+      .env("hi")
+      .parse("./test/config.json")
+      .defaults({hi: "pie"})
       .opts();
 
     assert.deepEqual(c, {

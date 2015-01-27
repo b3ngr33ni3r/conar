@@ -38,6 +38,7 @@ module.exports = function(opts) {
 
   self.defaults = function(obj) {
     self._sources._.defaults = hulksmash.objects(self._sources._.defaults, obj);
+
     return self;
   };
 
@@ -66,10 +67,8 @@ module.exports = function(opts) {
       self._sources.config.enabled = false;
     }
 
-    if (allow === false) {
-      self._sources.config.blacklist.push(key);
-    }
-
+    self._sources.config.blacklist.push(key);
+    
     return self;
   };
 
@@ -116,18 +115,22 @@ module.exports = function(opts) {
       res = hulksmash.keys(b);
       //self._sources._.logger(res);
       
-      var nuke = self._sources.config.blacklist.find(function(e) { return res.hasOwnProperty(e); });
-
-      self._sources._.logger(nuke);
-
-      // remove any blacklists from config before returning
-      if (typeof(nuke) === "string") {
-        delete res[nuke];
-      } else if (nuke) {
-        for (var i = 0 ; i < nuke.length ; i ++) {
-          delete res[nuke[i]];
+      // remove entries that are blacklisted. let '.' denote moving down the config object
+      for (var i = 0 ; i < self._sources.config.blacklist.length; i++) {
+        var e = self._sources.config.blacklist[i];
+        var parts = e.split(".");
+        var level = res;
+        for (var i = 0 ; i < parts.length; i++) {
+          if (level.hasOwnProperty(parts[i])) {
+            if (i+1 != parts.length) {
+              level = level[parts[i]];
+            } else {
+              delete level[parts[i]];
+            }
+          }
         }
       }
+
     }
     return res;
   }
@@ -140,6 +143,7 @@ module.exports = function(opts) {
       // if we have nothing whitelisted, return
       if (typeof(self._sources.env.whitelist) !== "undefined") {
         for (var i = 0; i < self._sources.env.whitelist.length ; i++) {
+
           if (self._sources.env.opts.hasOwnProperty(self._sources.env.whitelist[i])) {
             res[self._sources.env.whitelist[i]] = self._sources.env.opts[self._sources.env.whitelist[i]];
           }
@@ -161,35 +165,39 @@ module.exports = function(opts) {
 
       self._sources._.logger(res);
 
-      var nuke = (self._sources.arg.blacklist) ? self._sources.arg.blacklist.find(function(e) { return res.hasOwnProperty(e); }) : [];
-
-      self._sources._.logger("nuke: "+nuke);
-
-      // remove any blacklists from arg before returning
-      if (typeof(nuke) === "string") {
-        delete res[nuke];
-      } else if (nuke) {
-        for (var i = 0 ; i < nuke.length ; i ++) {
-          delete res[nuke[i]];
+      // remove entries that are blacklisted. let '.' denote moving down the arg object
+      for (var i = 0 ; i < self._sources.arg.blacklist.length; i++) {
+        var e = self._sources.arg.blacklist[i];
+        var parts = e.split(".");
+        var level = res;
+        for (var i = 0 ; i < parts.length; i++) {
+          if (level.hasOwnProperty(parts[i])) {
+            if (i+1 != parts.length) {
+              level = level[parts[i]];
+            } else {
+              delete level[parts[i]];
+            }
+          }
         }
       }
+
     }
     return res;
   }
 
   // does the actual parsing/work and returns the resultant
   self.opts = function() {
-    var res = {}, except = [];
+    var res = self._sources._.defaults, except = [];
 
     try{
       self._sources._.logger("trying to parse: pass0");
 
       if (self._sources._.order.first === flags.config) {
-        res = parseConfig();
+        res = hulksmash.objects(res, parseConfig());
       } else if (self._sources._.order.first === flags.env) {
-        res = parseEnv();
+        res = hulksmash.objects(res, parseEnv());
       } else if (self._sources._.order.first === flags.arg) {
-        res = parseArg();
+        res = hulksmash.objects(res, parseArg());
       }
 
       self._sources._.logger("trying to parse: pass1");   
@@ -222,7 +230,7 @@ module.exports = function(opts) {
     }
 
     // Throw if need be
-    if (self._sources._.suppress && except.length > 0) {
+    if (!self._sources._.suppress && except.length > 0) {
       throw {error:"aggregate exception", inner: except};
     }
 
