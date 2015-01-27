@@ -1,7 +1,7 @@
 {
   "name": "conar",
   "description": "produces key-value objects from combined config file/argv/env values.",
-  "version": "0.1.1",
+  "version": "1.0.0",
   "homepage": "https://github.com/bengreenier/conar",
   "author": {
     "name": "Ben Greenier",
