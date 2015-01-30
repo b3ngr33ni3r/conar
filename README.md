@@ -27,8 +27,10 @@ conar supports a few different things:
 
 once you've created an instance, that instance has the following api methods:
 
-  + __parse(file:string)__:  
+  + __parse(file:string, [regex:RegExp])__:  
   parse a file using [bengreenier/lconf](https://github.com/bengreenier/lconf) for configuration. supports `json`, `yaml`, `yml`, and `js` (with `module.exports = {};`)
+  if `file` is a directory, all files inside the directory will be included. if `regex` is given, `file` (if actual file) or all files in directory (if `file` is a directory)
+  will be compared against regex, and added if `regex.test(filePath)` returns `true`.
 
   + __order(first:number, second:number, third:number)__:  
   set the order for parsing; takes one of the `.<source>` parameters from off `conar`. parsing happens in the order `first<-second<-third` where `<-` indicates overwrite

@@ -85,6 +85,49 @@ describe("Conar instance", function() {
     assert.deepEqual(c, {}, "c shouldn't be "+JSON.stringify(c));
   });
 
+  it("should parse all config files given dir", function() {
+    var c = conar()
+      .env(false)
+      .arg(false)
+      .parse("./test")
+      .opts();
+
+    assert.deepEqual(c, {
+      "application": {
+        "production": {
+          "port": 3000,
+          "debug": false
+        },
+        "development": {
+          "port": 2000,
+          "debug": true,
+          "pie": true
+        }
+      }
+    }, "c shouldn't be "+JSON.stringify(c));
+  });
+
+  it("should parse config files given dir and regex", function() {
+    var c = conar()
+      .env(false)
+      .arg(false)
+      .parse("./test", /.?\.json$/)
+      .opts();
+
+    assert.deepEqual(c, {
+      "application": {
+        "production": {
+          "port": 3000,
+          "debug": false
+        },
+        "development": {
+          "port": 2000,
+          "debug": true
+        }
+      }
+    }, "c shouldn't be "+JSON.stringify(c));
+  });
+
   it("should parse config files (using lconf)", function() {
     var c = conar()
       .env(false)

@@ -5,3 +5,4 @@ application:
   development:
     port: 2000
     debug: true
+    pie: true
