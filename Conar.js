@@ -199,7 +199,14 @@ module.exports = function(opts) {
       } else if (self._sources._.order.first === flags.arg) {
         res = hulksmash.objects(res, parseArg());
       }
+    } catch (e) {
 
+      self._sources._.logger("exception! "+JSON.stringify(e));
+      
+      except.push(e);
+    }
+
+    try{
       self._sources._.logger("trying to parse: pass1");   
 
       if (self._sources._.order.second === flags.config) {
@@ -209,7 +216,14 @@ module.exports = function(opts) {
       } else if (self._sources._.order.second === flags.arg) {
         res = hulksmash.objects(res, parseArg());
       }
+    } catch (e) {
 
+      self._sources._.logger("exception! "+JSON.stringify(e));
+      
+      except.push(e);
+    }
+
+    try{
       self._sources._.logger("trying to parse: pass2");
 
       if (self._sources._.order.third === flags.config) {
@@ -219,9 +233,6 @@ module.exports = function(opts) {
       } else if (self._sources._.order.third === flags.arg) {
         res = hulksmash.objects(res, parseArg());
       }
-      
-      self._sources._.logger("trying to parse: pass3");
-
     } catch (e) {
 
       self._sources._.logger("exception! "+JSON.stringify(e));
