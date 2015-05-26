@@ -1,7 +1,7 @@
 {
   "name": "conar",
   "description": "produces key-value objects from combined config file/argv/env values.",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "homepage": "https://github.com/bengreenier/conar",
   "author": {
     "name": "Ben Greenier",
@@ -28,10 +28,10 @@
     "array.prototype.find": "^1.0.0",
     "hulksmash": "0.0.2",
     "lconf": "0.0.5",
-    "minimist": "^1.1.0"
+    "minimist": "^1.1.1"
   },
   "devDependencies": {
-    "mocha": "^2.1.0"
+    "mocha": "^2.2.5"
   },
   "keywords": [
     "config",
